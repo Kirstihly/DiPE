@@ -114,9 +114,9 @@ def generate_depth_map(calib_dir, velo_filename, cam=2, vel_depth=False):
 
 def export_gt_depths(data_path, split):
 
-    test_files = {"kitti_eigen": "test_files.txt",
-                  "kitti_eigen_benchmark": "test_files.txt",
-                  "kitti_benchmark": "val_selection_files.txt"}
+    test_files = {"eigen": "test_files.txt",
+                  "eigen_benchmark": "test_files.txt",
+                  "benchmark": "val_selection_files.txt"}
 
     split_folder = os.path.join(os.getcwd(), "splits", split)
     lines = readlines(os.path.join(split_folder, test_files[split]))
@@ -128,17 +128,17 @@ def export_gt_depths(data_path, split):
 
         folder, frame_id1, frame_id2 = line.split()
 
-        if split == "kitti_eigen":
+        if split == "eigen":
             calib_dir = os.path.join(data_path, folder.split("/")[0])
             velo_filename = os.path.join(data_path, folder,
                                          "velodyne_points/data", "{:010d}.bin".format(int(frame_id1)))
             gt_depth = generate_depth_map(calib_dir, velo_filename, 2, True)
-        elif split == "kitti_eigen_benchmark":
+        elif split == "eigen_benchmark":
             gt_depth_path = os.path.join(data_path, folder, "proj_depth",
                                          "groundtruth", "image_02", "{:010d}.png".format(int(frame_id1)))
             gt_depth = np.array(pil.open(gt_depth_path)).astype(np.float32) / 256
 
-        elif split == "kitti_benchmark":
+        elif split == "benchmark":
             gt_depth_path = os.path.join(data_path, folder, "groundtruth_depth",
                                          frame_id1 + "_groundtruth_depth_" + frame_id2 + ".png")
             gt_depth = np.array(pil.open(gt_depth_path)).astype(np.float32) / 256
