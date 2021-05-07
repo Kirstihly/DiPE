@@ -14,13 +14,7 @@ The Pytorch code for our following paper
 
 #### Installation
 
-Install pytorch first by running
-
-```bash
-conda install torchvision=0.2.1  cuda100 -c pytorch
-```
-
-Then install other requirements
+Install dependencies by running
 
 ```bash
 pip install -r requirements.txt
